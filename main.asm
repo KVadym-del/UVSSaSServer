@@ -190,8 +190,8 @@ $SETUP6:
 	mov rdx, 0
 	mov rcx, qword ptr listenSocket$[rsp]
 	call accept
-	mov qword ptr funcResult$[rsp], rax
-	cmp qword ptr funcResult$[rsp], -1
+	mov qword ptr clientSocket$[rsp], rax
+	cmp qword ptr clientSocket$[rsp], -1
 	jne short $SETUP7
 	
 	call WSAGetLastError
@@ -204,13 +204,8 @@ $SETUP6:
 	call WSACleanup
 	mov rax, 1
 	jmp $END1
-	
-$SETUP7:
-	mov rax, qword ptr funcResult$[rsp]
-	mov qword ptr clientSocket$[rsp], rax 
-	mov qword ptr listenSocket$[rsp], -1
 
-$SETUP8:
+$SETUP7:
 	mov rcx, qword ptr listenSocket$[rsp]
 	call closesocket
 	; npad 1
